@@ -95,3 +95,19 @@ class convLSTM(pl.LightningModule):
         # optimizer setting
         optim = torch.optim.Adam(self.model.parameters(), lr=1e-3)
         return optim
+
+    def train_dataloader(self):
+       # Define training dataset
+        year = range(2020, 2023)
+        dataset = []
+        for y in year:
+            dataset.append(MyDataset(year=y))
+        datasets = torch.utils.data.ConcatDataset(dataset)
+        train_loader = DataLoader(datasets, batch_size=16, num_workers=4, shuffle=True)
+        return train_loader
+
+    def val_dataloader(self):
+        # (optional) Define validation dataset
+        dataset = MyDataset(year='2022', split='valid')
+        valid_loader = DataLoader(dataset, batch_size=32, num_workers=4, shuffle=False)
+        return valid_loader
