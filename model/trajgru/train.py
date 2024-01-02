@@ -105,7 +105,7 @@ class trajGRU(pl.LightningModule):
             "valid_score": valid_score
         })
 
-def train_dataloader(self):
+    def train_dataloader(self):
        # Define training dataset
         year = range(2020, 2023)
         dataset = []
